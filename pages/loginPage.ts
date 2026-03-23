@@ -2,7 +2,9 @@
 import { Page, expect } from '@playwright/test';
 import { waitAndClick } from '../utils/helpers';
 
-export class LoginPage {constructor(private page: Page) {}
+export class LoginPage {
+    
+    constructor(private page: Page) {}
 
     // Locators
     emailInput = this.page.locator('#login-email');
@@ -12,14 +14,7 @@ export class LoginPage {constructor(private page: Page) {}
     homePageHeading = this.page.getByRole('heading', { name: /Welcome back/ });
 
     // Actions
-    async navigate() {
-        await this.page.goto(process.env.BASE_URL || 'https://ndosisimplifiedautomation.vercel.app/');
-    }
-
-    //async clickLogin() {
-     //   await this.loginButton.click();
-   // }
-
+    
     async clickLogin() {
         await waitAndClick(this.loginButton);
     }

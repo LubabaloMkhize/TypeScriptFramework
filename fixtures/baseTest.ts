@@ -1,5 +1,6 @@
 import { test as base } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
+import { allure } from 'allure-playwright';
 
 type Fixtures = {
     loginPage: LoginPage;
@@ -10,4 +11,26 @@ export const test = base.extend<Fixtures>({
         const loginPage = new LoginPage(page);
         await use(loginPage);
     },
+});
+
+test.afterEach(async ({ page }, testInfo) => {
+    if (testInfo.status !== 'passed') {
+        await allure.attachment(
+            'Failure Screenshot',
+            await page.screenshot({ fullPage: true }),
+            'image/png'
+        );
+
+        await allure.attachment(
+            'Page URL',
+            page.url(),
+            'text/plain'
+        );
+
+        await allure.attachment(
+            'Test Details',
+            `Status: ${testInfo.status}\nTitle: ${testInfo.title}`,
+            'text/plain'
+        );
+    }
 });
