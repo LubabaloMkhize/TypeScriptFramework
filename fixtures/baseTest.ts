@@ -1,11 +1,13 @@
-// fixtures/baseTest.ts
 import { test as base } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 
-export const test = base.extend<{
+type Fixtures = {
     loginPage: LoginPage;
-}>({
+};
+
+export const test = base.extend<Fixtures>({
     loginPage: async ({ page }, use) => {
-        await use(new LoginPage(page));
+        const loginPage = new LoginPage(page);
+        await use(loginPage);
     },
 });

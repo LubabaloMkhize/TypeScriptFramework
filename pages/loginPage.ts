@@ -1,23 +1,42 @@
 // pages/loginPage.ts
 import { Page, expect } from '@playwright/test';
+import { waitAndClick } from '../utils/helpers';
 
-export class LoginPage {
-    constructor(private page: Page) {}
+export class LoginPage {constructor(private page: Page) {}
 
     // Locators
     emailInput = this.page.locator('#login-email');
+    passwordInput = this.page.locator('#login-password');
+    loginSubmitButton = this.page.locator('#login-submit');
     loginButton = this.page.getByRole('button', { name: 'Login' });
+    homePageHeading = this.page.getByRole('heading', { name: /Welcome back/ });
 
     // Actions
     async navigate() {
-        await this.page.goto('https://ndosisimplifiedautomation.vercel.app/');
+        await this.page.goto(process.env.BASE_URL || 'https://ndosisimplifiedautomation.vercel.app/');
     }
 
+    //async clickLogin() {
+     //   await this.loginButton.click();
+   // }
+
     async clickLogin() {
-        await this.loginButton.click();
+        await waitAndClick(this.loginButton);
     }
 
     async enterEmail(email: string) {
         await this.emailInput.fill(email);
+    }
+
+    async enterPassword(password: string){
+        await this.passwordInput.fill(password);
+    }
+
+    async clickLoginSubmitButton(){
+        await this.loginSubmitButton.click();
+    }
+
+    async verifyPageHeading(){
+        await expect(this.homePageHeading).toBeVisible();
     }
 }
