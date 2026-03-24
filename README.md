@@ -1,3 +1,47 @@
+# TypeScript Playwright Automation Framework
+
+A lightweight and maintainable Playwright framework for web UI automation with TypeScript.
+
+## Project Overview
+
+- Playwright-based end-to-end testing in TypeScript
+- Allure reporting integrated (`allure-results`)
+- Recommended workflow: feature branches + PRs + CI execution
+
+## Folder Structure
+
+- `tests/` - test suites and test files
+- `pages/` - page object models
+- `fixtures/` - test fixtures (e.g., `baseTest.ts`)
+- `utils/` - utility helpers (shared functions, data handling)
+- `playwright-report/` - generated HTML reports
+- `test-results/` - raw test output for CI
+- `allure-results/` - Allure test artifacts (json/attachments)
+- `package.json` - dependencies + scripts
+- `playwright.config.ts` - Playwright runner configuration
+
+## Getting Started
+
+1. Install dependencies:
+```bash
+npm install
+```
+2. Run tests:
+```bash
+npx playwright test
+```
+3. Generate allure report (if configured):
+```bash
+npx allure generate allure-results --clean -o allure-report
+npx allure open allure-report
+```
+4. Run specific tests:
+```bash
+npx playwright test tests/<your-test-file>.ts
+```
+
+---
+
 ## 🤝 Collaboration & Git Workflow
 
 To keep our Playwright framework clean and maintainable, please follow this Git workflow.
