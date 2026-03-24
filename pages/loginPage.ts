@@ -28,7 +28,8 @@ export class LoginPage {
     }
 
     async clickLoginSubmitButton(){
-        await this.loginSubmitButton.click();
+        await waitAndClick(this.loginSubmitButton);
+        //await this.loginSubmitButton.click();
     }
 
     async verifyPageHeading(){
