@@ -1,9 +1,11 @@
 import { test as base } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
+import {SignUpPage} from '../pages/signUpPage';
 import { allure } from 'allure-playwright';
 
 type Fixtures = {
     loginPage: LoginPage;
+    signUpPage: SignUpPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -11,7 +13,12 @@ export const test = base.extend<Fixtures>({
         const loginPage = new LoginPage(page);
         await use(loginPage);
     },
+    signUpPage: async ({ page }, use) => {
+        const signUpPage = new SignUpPage(page);
+        await use(signUpPage);
+    }    
 });
+
 
 test.afterEach(async ({ page }, testInfo) => {
     if (testInfo.status !== 'passed') {
