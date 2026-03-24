@@ -12,6 +12,7 @@ export class LoginPage {
     loginSubmitButton = this.page.locator('#login-submit');
     loginButton = this.page.getByRole('button', { name: 'Login' });
     homePageHeading = this.page.getByRole('heading', { name: /Welcome back/ });
+    signUpLink = this.page.locator('#signup-toggle')
 
     // Actions
     
@@ -34,5 +35,9 @@ export class LoginPage {
 
     async verifyPageHeading(){
         await expect(this.homePageHeading).toBeVisible();
+    }
+
+    async clickSignUpLink(){
+        await waitAndClick(this.signUpLink);
     }
 }

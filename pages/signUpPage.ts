@@ -47,17 +47,18 @@ export class SignUpPage {
         await this.registerGroupDdl.selectOption(group);
     } 
 
-    async fillSignUpForm(data: {firstName: string;lastName: string;email: string;password: string;group: string;}) {
-    await this.enterFirstName(data.firstName);
-    await this.enterLastName(data.lastName);
-    await this.enterEmail(data.email);
-    await this.enterPassword(data.password);
-    await this.enterConfirmPassword(data.password);
-    await this.selectGroup(data.group);
-  }
+    async fillSignUpForm(data: {firstName: string;lastName: string;email: string;password: string;confirmpPassword: string;group: string;}) {
+         await this.enterFirstName(data.firstName);
+         await this.enterLastName(data.lastName);
+         await this.enterEmail(data.email);
+         await this.enterPassword(data.password);
+         await this.enterConfirmPassword(data.confirmpPassword);
+         await this.enterConfirmPassword(data.password);
+         await this.selectGroup(data.group);
+    }
 
-    async clickRegisterSubmitButton(){
-        await waitAndClick(this.registerSubmitButton);
-        //await this.registerSubmitButton.click();
+    async clickCreateAccountButton(){
+        //await waitAndClick(this.registerSubmitButton);
+        await this.registerSubmitButton.click();
     }
 }

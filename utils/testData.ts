@@ -8,14 +8,16 @@ export const users = {
     invalidUser: {
         email: 'Tatalo@example.com',
         password: 'England@123456'
-    },
+    }
+};
 
+export const signUpData = {
     validSignUp: {
-        firstname:'Mpilo',
-        lastname:'Mkhuze',
-        email:'MpiloMkuze@gmail.com',
+        firstName:'Mpilo',
+        lastName:'Mkhuze',
+        email:'MpiloM@gmail.com',
         password: 'England@123456',
-        confirmpassword:'England@123456',
-        group:'1st Group 2026 (2026)'
+        confirmPassword:'England@123456',
+        group:'2nd Group 2026 (2026)'
     }
 };
