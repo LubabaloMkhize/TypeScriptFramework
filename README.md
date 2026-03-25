@@ -149,6 +149,7 @@ npx playwright show-report
 ```bash
 npx allure generate allure-results --clean -o allure-report
 npx allure open allure-report
+Allure Latest Version: npx allure generate "allure-results" -o allure-report
 ```
 
 ## Troubleshooting
