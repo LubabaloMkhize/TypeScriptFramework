@@ -53,12 +53,13 @@ export class SignUpPage {
          await this.enterEmail(data.email);
          await this.enterPassword(data.password);
          await this.enterConfirmPassword(data.confirmpPassword);
-         await this.enterConfirmPassword(data.password);
          await this.selectGroup(data.group);
     }
 
+
+
     async clickCreateAccountButton(){
-        //await waitAndClick(this.registerSubmitButton);
-        await this.registerSubmitButton.click();
+        await waitAndClick(this.registerSubmitButton);
+        //await this.registerSubmitButton.click();
     }
 }

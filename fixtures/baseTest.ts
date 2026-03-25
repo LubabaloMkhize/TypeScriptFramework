@@ -16,6 +16,7 @@ export const test = base.extend<Fixtures>({
     signUpPage: async ({ page }, use) => {
         const signUpPage = new SignUpPage(page);
         await use(signUpPage);
+
     }    
 });
 

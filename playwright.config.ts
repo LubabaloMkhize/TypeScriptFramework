@@ -56,6 +56,12 @@ export default defineConfig({
       name: 'webkit',
       use: { ...devices['Desktop Safari'], baseURL },
     },
+    
+   {
+      name: 'edge',
+      use: {...devices['Desktop Edge'],channel: 'msedge',baseURL,},
+    },
+
 
     /* Test against mobile viewports. */
     // {
