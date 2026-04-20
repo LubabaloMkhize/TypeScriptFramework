@@ -15,7 +15,7 @@ export const signUpData = {
     validSignUp: {
         firstName:'Ask',
         lastName:'Sis',
-        email:'Ask5@gmail.com',
+        email:'Sello@gmail.com',
         password: 'England@123456',
         confirmPassword:'England@123456',
         group:'2nd Group 2026 (2026)'
