@@ -25,6 +25,18 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+    - name: Send email notification
+      if: always()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "Playwright Test Results"
+        body: "The Playwright tests have completed. Check GitHub Actions for details."
+        to: lubabalo.mkhize@prasa.com
+        from: Lubabalo.Mkhize@gmail.com
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
