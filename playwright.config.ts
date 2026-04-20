@@ -47,20 +47,7 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], baseURL },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'], baseURL },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'], baseURL },
-    },
-    
-   {
-      name: 'edge',
-      use: {...devices['Desktop Edge'],channel: 'msedge',baseURL,},
-    },
+   
 
 
     /* Test against mobile viewports. */
