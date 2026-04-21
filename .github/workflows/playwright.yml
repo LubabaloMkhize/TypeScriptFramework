@@ -27,6 +27,12 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test
 
+    # 👉 Generate Allure report from results
+    - name: Generate Allure Report
+      if: always()
+      run: |
+        npx allure generate allure-results --clean -o allure-report
+
     - name: Send email notification
       if: always()
       uses: dawidd6/action-send-mail@v3
@@ -36,13 +42,21 @@ jobs:
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: "Playwright Test Results"
-        body: "The Playwright tests have completed. Check GitHub Actions for details."
+        body: "Tests completed. Download reports from GitHub Actions."
         to: lubabalo.mkhize@prasa.com
         from: Lubabalo.Mkhize@gmail.com
 
+    # 👉 Upload BOTH reports
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
         path: playwright-report/
+        retention-days: 30
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: allure-report
+        path: allure-report/
         retention-days: 30
