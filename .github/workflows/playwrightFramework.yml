@@ -1,0 +1,98 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+    # Checkout code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Setup Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+
+    # Install dependencies
+    - name: Install dependencies
+      run: npm ci
+
+    # Install Playwright browsers
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    # Run Playwright tests
+    - name: Run Playwright tests
+      run: npx playwright test
+
+    # Generate Allure report
+    - name: Generate Allure report
+      if: always()
+      run: |
+        npx allure-commandline generate allure-results --clean -o allure-report
+
+    # Zip Playwright report
+    - name: Zip Playwright report
+      if: always()
+      run: zip -r playwright-report.zip playwright-report
+
+    # Zip Allure report
+    - name: Zip Allure report
+      if: always()
+      run: zip -r allure-report.zip allure-report
+
+    # Send email with reports attached
+    - name: Send test report email
+      if: always()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "Playwright Test Execution Results"
+        body: |
+          Good day,
+
+          Playwright test execution has completed.
+
+          Please find the attached test reports:
+          - Playwright HTML Report
+          - Allure Report
+
+          Full execution artifacts are also available in GitHub Actions.
+
+          Regards,
+          CI Automation
+        to: anele.xulu@prasa.com
+        from: Lubabalo.Mkhize@gmail.com
+        attachments: |
+          playwright-report.zip,
+          allure-report.zip
+
+    # Upload Playwright report artifact
+    - name: Upload Playwright report artifact
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+
+    # Upload Allure report artifact
+    - name: Upload Allure report artifact
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report
+        path: allure-report/
+        retention-days: 30
