@@ -12,45 +12,71 @@ jobs:
     timeout-minutes: 60
 
     steps:
+    # -----------------------------
     # Checkout code
+    # -----------------------------
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    # -----------------------------
     # Setup Node.js
+    # -----------------------------
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: lts/*
 
+    # -----------------------------
     # Install dependencies
+    # -----------------------------
     - name: Install dependencies
       run: npm ci
 
-    # Install Playwright browsers
-    - name: Install Playwright Browsers
+    # -----------------------------
+    # Install Playwright Browsers
+    # -----------------------------
+    - name: Install Playwright browsers
       run: npx playwright install --with-deps
 
+    # -----------------------------
     # Run Playwright tests
+    # -----------------------------
     - name: Run Playwright tests
       run: npx playwright test
 
+    # -----------------------------
     # Generate Allure report
+    # -----------------------------
     - name: Generate Allure report
       if: always()
       run: |
         npx allure-commandline generate allure-results --clean -o allure-report
 
-    # Zip Playwright report
-    - name: Zip Playwright report
+    # -----------------------------
+    # Upload Playwright report
+    # -----------------------------
+    - name: Upload Playwright report artifact
       if: always()
-      run: zip -r playwright-report.zip playwright-report
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
 
-    # Zip Allure report
-    - name: Zip Allure report
+    # -----------------------------
+    # Upload Allure report
+    # -----------------------------
+    - name: Upload Allure report artifact
       if: always()
-      run: zip -r allure-report.zip allure-report
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report
+        path: allure-report/
+        retention-days: 30
 
-    # Send email with reports attached
+    # -----------------------------
+    # Send email notification (NO attachments)
+    # -----------------------------
     - name: Send test report email
       if: always()
       uses: dawidd6/action-send-mail@v3
@@ -59,40 +85,24 @@ jobs:
         server_port: 465
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: "Playwright Test Execution Results"
+        subject: "Playwright Test Execution Results – GitHub Actions"
         body: |
           Good day,
 
-          Playwright test execution has completed.
+          The Playwright test execution has completed.
 
-          Please find the attached test reports:
-          - Playwright HTML Report
-          - Allure Report
+          Repository: ${{ github.repository }}
+          Branch:     ${{ github.ref_name }}
+          Status:     ${{ job.status }}
 
-          Full execution artifacts are also available in GitHub Actions.
+          Reports can be downloaded from the GitHub Actions run:
+          👉 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          Available artifacts:
+          • Playwright HTML Report
+          • Allure Report
 
           Regards,
-          CI Automation
-        to: anele.xulu@prasa.com
+          CI Automation Pipeline
+        to: lubabalo.mkhize@prasa.com
         from: Lubabalo.Mkhize@gmail.com
-        attachments: |
-          playwright-report.zip,
-          allure-report.zip
-
-    # Upload Playwright report artifact
-    - name: Upload Playwright report artifact
-      if: ${{ !cancelled() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
-
-    # Upload Allure report artifact
-    - name: Upload Allure report artifact
-      if: ${{ !cancelled() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: allure-report
-        path: allure-report/
-        retention-days: 30
