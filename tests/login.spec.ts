@@ -2,6 +2,9 @@ import { test } from '../fixtures/baseTest';
 import { users } from '../utils/testData';
 import { allure } from 'allure-playwright';
 
+
+test.describe('Login Tests', () => {
+    
 test('Login test validuser', async ({ page, loginPage }) => {
     await allure.step('Navigate to login page', async () => {
     await page.goto('/');
@@ -57,4 +60,6 @@ test('Login test invaliduser', async ({ page, loginPage }) => {
     });
 
     
+});
+
 });
