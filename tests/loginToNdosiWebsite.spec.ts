@@ -21,7 +21,7 @@ test("Verify page Url",async ({page}) => {
 test("Verify page heading", async ({ page }) => {
     await page.goto("https://ndosisimplifiedautomation.vercel.app/");
 
-    await expect(page.getByRole('heading', { name: /Master Test Automation/ }))
+    await expect(page.getByRole('heading', { name: /Learn with people who care about your growth/ }))
         .toBeVisible();
 });
 
