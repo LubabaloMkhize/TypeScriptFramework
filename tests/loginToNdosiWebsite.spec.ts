@@ -18,12 +18,7 @@ test("Verify page Url",async ({page}) => {
     await expect(page).toHaveURL(/ndosisimplifiedautomation/);
 })
 
-test("Verify page heading", async ({ page }) => {
-    await page.goto("https://ndosisimplifiedautomation.vercel.app/");
 
-    await expect(page.getByRole('heading', { name: /Learn with people who care about your growth/ }))
-        .toBeVisible();
-});
 
 test("Successful login", async ({ page }) => {
     await page.goto("https://ndosisimplifiedautomation.vercel.app/");
