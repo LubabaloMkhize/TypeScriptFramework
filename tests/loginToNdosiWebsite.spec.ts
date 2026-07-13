@@ -13,7 +13,7 @@ test("Verify page Url",async ({page}) => {
     await page.goto("https://ndosisimplifiedautomation.vercel.app/");
 
     let url:string=await page.url();
-    console.log("Title : ",url);
+    console.log("Site Url : ",url);
 
     await expect(page).toHaveURL(/ndosisimplifiedautomation/);
 })
@@ -25,11 +25,14 @@ test("Successful login", async ({ page }) => {
 
     await page.getByRole('button', { name: 'Login' }).click();
 
-    await page.getByRole('heading', { name: 'Login to Access Learning Materials'}).isVisible();
+    const loginHeading = await page.getByRole('heading', { name: 'Login to Access Learning Materials'}).isVisible();
+
+    console.log("Login Heading Visible : ", loginHeading);
 
     await page.locator('#login-email').fill('Tatalo.Mkhize@example.com');
 
     await page.locator('#login-password').fill('England@123456');
+
 
     await page.locator('#login-submit').click();
 
