@@ -1,10 +1,9 @@
 // pages/signUpPage.ts
 import { Page, expect } from '@playwright/test';
-import { waitAndClick } from '../utils/helpers';
+import { BasePage } from './basePage'
 
-export class SignUpPage {
+export class SignUpPage extends BasePage {
     
-    constructor(private page: Page) {}
 
     // Locators
     signUpPageHeading = this.page.getByRole('heading', { name: /Create your account/ });
@@ -59,7 +58,7 @@ export class SignUpPage {
 
 
     async clickCreateAccountButton(){
-        await waitAndClick(this.registerSubmitButton);
-        //await this.registerSubmitButton.click();
+        //await waitAndClick(this.registerSubmitButton);
+        await this.registerSubmitButton.click();
     }
 }

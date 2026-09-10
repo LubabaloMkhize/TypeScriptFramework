@@ -1,7 +1,7 @@
-import { test } from '../fixtures/baseTest';
-import { signUpData } from '../utils/testData';
+import { test } from '../src/fixtures/testFixtures';
+import { signUpData } from '../src/data/testData';
 import { allure } from 'allure-playwright';
-import { expect } from '@playwright/test'
+
 
 test('SignUp test validuser', async ({ page, signUpPage, loginPage }) => {
     await allure.step('Navigate to login page', async () => {

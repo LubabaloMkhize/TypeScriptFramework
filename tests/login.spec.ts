@@ -1,5 +1,5 @@
-import { test } from '../fixtures/baseTest';
-import { users } from '../utils/testData';
+import { test, expect } from '../src/fixtures/testFixtures';
+import {users} from '../src/data/testData';
 import { allure } from 'allure-playwright';
 
 

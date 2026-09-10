@@ -1,11 +1,10 @@
 // pages/loginPage.ts
-import { Page, expect } from '@playwright/test';
-import { waitAndClick } from '../utils/helpers';
+import {Page,Locator} from '@playwright/test';  
+import { BasePage } from './basePage';
 
-export class LoginPage {
+
+export class LoginPage extends BasePage {
     
-    constructor(private page: Page) {}
-
     // Locators
     emailInput = this.page.locator('#login-email');
     passwordInput = this.page.locator('#login-password');
@@ -17,7 +16,7 @@ export class LoginPage {
     // Actions
     
     async clickLogin() {
-        await waitAndClick(this.loginButton);
+        await this.waitAndClick(this.loginButton);
     }
 
     async enterEmail(email: string) {
@@ -29,15 +28,15 @@ export class LoginPage {
     }
 
     async clickLoginSubmitButton(){
-        await waitAndClick(this.loginSubmitButton);
+        await this.waitAndClick(this.loginSubmitButton);
         //await this.loginSubmitButton.click();
     }
 
     async verifyPageHeading(){
-        await expect(this.homePageHeading).toBeVisible();
+        await this.verifyElementVisible(this.homePageHeading);
     }
 
     async clickSignUpLink(){
-        await waitAndClick(this.signUpLink);
+        await this.waitAndClick(this.signUpLink);
     }
 }
