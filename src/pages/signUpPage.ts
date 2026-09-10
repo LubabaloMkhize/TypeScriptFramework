@@ -55,10 +55,14 @@ export class SignUpPage extends BasePage {
          await this.selectGroup(data.group);
     }
 
-
+    async verifyRegistrationMessage(alertMessage: string) {
+    expect(['Registration submitted successfully. Your account is pending admin approval.']).toContain(alertMessage);
+    }
 
     async clickCreateAccountButton(){
         //await waitAndClick(this.registerSubmitButton);
         await this.registerSubmitButton.click();
     }
+
+    
 }

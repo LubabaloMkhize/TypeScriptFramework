@@ -34,29 +34,19 @@ test('SignUp test validuser', async ({ page, signUpPage, loginPage }) => {
     let alertMessage = '';
 
     await allure.step('Click create account button and wait for popup', async () => {
-        page.once('dialog', async dialog => {
-            alertMessage = dialog.message();
-            await dialog.accept();
-        });
+
+
+        const dialogPromise = page.waitForEvent('dialog');
 
         await signUpPage.clickCreateAccountButton();
-        await page.waitForTimeout(500);
 
-        await allure.attachment(
-            'Signup Popup Message',
-            alertMessage,
-            'text/plain'
-        );
+        const dialog = await dialogPromise;
+        const alertMessage = dialog.message();
 
+        await dialog.accept();
 
-        await allure.attachment(
-            'Popup Screenshot',
-            await page.screenshot(),
-            'image/png'
-        );
+        await signUpPage.verifyText(alertMessage,'Registration submitted successfully. Your account is pending admin approval.');
 
-
-        expect(['User with this email already exists', 'Registration submitted successfully. Your account is pending admin approval.']).toContain(alertMessage);
     });
 
 

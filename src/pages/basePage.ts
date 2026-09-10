@@ -33,4 +33,16 @@ export class BasePage {
         await locator.click();
     }
 
+    async verifyText(actual: string, expected: string) {
+    expect(actual).toBe(expected);
+    }
+
+    async verifyContains(actual: string, expected: string) {
+        expect(actual).toContain(expected);
+    }
+
+    async verifyLocatorText(locator: Locator, text: string) {
+        await expect(locator).toHaveText(text);
+    }
+
 }
