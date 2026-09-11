@@ -1,4 +1,4 @@
-import { test, expect } from '../src/fixtures/testFixtures';
+import { test, expect } from '../src/fixtures/CustomFixtures';
 import {users} from '../src/data/testData';
 import { allure } from 'allure-playwright';
 

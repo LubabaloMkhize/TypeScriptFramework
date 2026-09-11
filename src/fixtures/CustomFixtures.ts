@@ -24,27 +24,27 @@ export const test = base.extend<CustomFixtures>({
 export { expect } from '@playwright/test';
 
 
-test.afterEach(async ({ page }, testInfo) => {
-    if (testInfo.status !== 'passed') {
-        await allure.attachment(
-            'Failure Screenshot',
-            await page.screenshot({ fullPage: true }),
-            'image/png'
-        );
+// test.afterEach(async ({ page }, testInfo) => {
+//     if (testInfo.status !== 'passed') {
+//         await allure.attachment(
+//             'Failure Screenshot',
+//             await page.screenshot({ fullPage: true }),
+//             'image/png'
+//         );
 
-        await allure.attachment(
-            'Page URL',
-            page.url(),
-            'text/plain'
-        );
+//         await allure.attachment(
+//             'Page URL',
+//             page.url(),
+//             'text/plain'
+//         );
 
-        await allure.attachment(
-            'Test Details',
-            `Status: ${testInfo.status}\nTitle: ${testInfo.title}`,
-            'text/plain'
-        );
-    }
-});
+//         await allure.attachment(
+//             'Test Details',
+//             `Status: ${testInfo.status}\nTitle: ${testInfo.title}`,
+//             'text/plain'
+//         );
+//     }
+// });
 
 // import { test as base } from '@playwright/test';
 // import { LoginPage } from '../pages/loginPage';

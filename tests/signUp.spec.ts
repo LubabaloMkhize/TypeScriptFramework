@@ -1,4 +1,4 @@
-import { test } from '../src/fixtures/testFixtures';
+import { test } from '../src/fixtures/CustomFixtures';
 import { signUpData } from '../src/data/testData';
 import { allure } from 'allure-playwright';
 
