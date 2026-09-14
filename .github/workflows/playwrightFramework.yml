@@ -3,11 +3,12 @@ name: Playwright Tests
 on:
   push:
     branches: [ main ]
+
   pull_request:
     branches: [ main ]
 
   workflow_dispatch:
-      
+
 
 jobs:
   test:
@@ -15,11 +16,13 @@ jobs:
     timeout-minutes: 60
 
     steps:
+
     # -----------------------------
     # Checkout code
     # -----------------------------
     - name: Checkout repository
       uses: actions/checkout@v4
+
 
     # -----------------------------
     # Setup Node.js
@@ -29,15 +32,21 @@ jobs:
       with:
         node-version: lts/*
 
+
     # -----------------------------
     # Install dependencies
     # -----------------------------
     - name: Install dependencies
       run: npm ci
 
+
+    # -----------------------------
+    # Install Allure
+    # -----------------------------
     - name: Install Allure
       run: |
         npm install --save-dev allure-commandline allure-playwright
+
 
     # -----------------------------
     # Install Playwright Browsers
@@ -45,11 +54,13 @@ jobs:
     - name: Install Playwright browsers
       run: npx playwright install --with-deps
 
+
     # -----------------------------
     # Run Playwright tests
     # -----------------------------
     - name: Run Playwright tests
       run: npx playwright test
+
 
     # -----------------------------
     # Generate Allure report
@@ -57,10 +68,27 @@ jobs:
     - name: Generate Allure report
       if: always()
       run: |
-        echo "Generating Allure..."
+        echo "Generating Allure report..."
         npx allure-commandline generate allure-results --clean -o allure-report
-        echo "Generated report"
+        echo "Allure report generated"
         ls -la allure-report
+
+
+    # -----------------------------
+    # Verify Extent reports
+    # -----------------------------
+    - name: Verify Extent reports
+      if: always()
+      run: |
+        echo "Checking Extent reports..."
+
+        if [ -d "reports" ]; then
+          echo "Extent reports directory found:"
+          ls -la reports
+        else
+          echo "Extent reports directory was not found."
+        fi
+
 
     # -----------------------------
     # Upload Playwright report
@@ -73,6 +101,20 @@ jobs:
         path: playwright-report/
         retention-days: 30
 
+
+    # -----------------------------
+    # Upload Extent reports
+    # -----------------------------
+    - name: Upload Extent reports artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: extent-reports
+        path: reports/
+        retention-days: 30
+        if-no-files-found: warn
+
+
     # -----------------------------
     # Upload Allure report
     # -----------------------------
@@ -84,8 +126,9 @@ jobs:
         path: allure-report/
         retention-days: 30
 
+
     # -----------------------------
-    # Send email notification (NO attachments)
+    # Send email notification
     # -----------------------------
     - name: Send test report email
       if: always()
@@ -96,6 +139,7 @@ jobs:
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: "Playwright Test Execution Results – GitHub Actions"
+
         body: |
           Good day,
 
@@ -106,13 +150,19 @@ jobs:
           Status:     ${{ job.status }}
 
           Reports can be downloaded from the GitHub Actions run:
-          👉 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
           Available artifacts:
+
           • Playwright HTML Report
+          • Extent HTML Report
+          • Extent PDF Report
           • Allure Report
 
           Regards,
           CI Automation Pipeline
+
         to: lubabalo.mkhize@prasa.com
         from: Lubabalo.Mkhize@gmail.com
+
