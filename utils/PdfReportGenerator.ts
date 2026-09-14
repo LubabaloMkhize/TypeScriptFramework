@@ -1,0 +1,214 @@
+import PDFDocument from 'pdfkit';
+import * as fs from 'fs';
+import * as path from 'path';
+
+export interface TestReportData {
+    title: string;
+    status: string;
+    duration: number;
+    project: string;
+    tags: string[];
+    error?: string;
+}
+
+export class PdfReportGenerator {
+
+    static generate(
+        tests: TestReportData[],
+        executionDuration: number
+    ): void {
+
+        const reportDir = path.resolve('reports');
+
+        if (!fs.existsSync(reportDir)) {
+            fs.mkdirSync(reportDir, { recursive: true });
+        }
+
+        const pdfPath = path.join(
+            reportDir,
+            'extent-report.pdf'
+        );
+
+        const doc = new PDFDocument({
+            margin: 40,
+            size: 'A4'
+        });
+
+        const stream = fs.createWriteStream(pdfPath);
+
+        doc.pipe(stream);
+
+        // ==========================================
+        // Calculate statistics
+        // ==========================================
+
+        const total = tests.length;
+
+        const passed = tests.filter(
+            test => test.status === 'PASS'
+        ).length;
+
+        const failed = tests.filter(
+            test => test.status === 'FAIL'
+        ).length;
+
+        const skipped = tests.filter(
+            test => test.status === 'SKIP'
+        ).length;
+
+        const passRate = total > 0
+            ? ((passed / total) * 100).toFixed(1)
+            : '0.0';
+
+        // ==========================================
+        // Header
+        // ==========================================
+
+        doc
+            .fontSize(22)
+            .font('Helvetica-Bold')
+            .text('Ndosi Automation');
+
+        doc
+            .fontSize(14)
+            .font('Helvetica')
+            .text('Playwright Test Execution Report');
+
+        doc.moveDown();
+
+        doc
+            .fontSize(10)
+            .text(`Generated: ${new Date().toLocaleString()}`);
+
+        doc.moveDown(2);
+
+        // ==========================================
+        // Execution Summary
+        // ==========================================
+
+        doc
+            .fontSize(16)
+            .font('Helvetica-Bold')
+            .text('Execution Summary');
+
+        doc.moveDown();
+
+        doc
+            .fontSize(11)
+            .font('Helvetica')
+            .text(`Total Tests: ${total}`)
+            .text(`Passed: ${passed}`)
+            .text(`Failed: ${failed}`)
+            .text(`Skipped: ${skipped}`)
+            .text(`Pass Rate: ${passRate}%`)
+            .text(`Execution Time: ${executionDuration} ms`);
+
+        doc.moveDown(2);
+
+        // ==========================================
+        // Test Results
+        // ==========================================
+
+        doc
+            .fontSize(16)
+            .font('Helvetica-Bold')
+            .text('Test Results');
+
+        doc.moveDown();
+
+        tests.forEach((test, index) => {
+
+            // Prevent content from running off page
+            if (doc.y > 700) {
+                doc.addPage();
+
+                doc
+                    .fontSize(16)
+                    .font('Helvetica-Bold')
+                    .text('Test Results - Continued');
+
+                doc.moveDown();
+            }
+
+            doc
+                .fontSize(12)
+                .font('Helvetica-Bold')
+                .text(`${index + 1}. ${test.title}`);
+
+            doc
+                .fontSize(10)
+                .font('Helvetica')
+                .text(`Status: ${test.status}`)
+                .text(`Browser/Project: ${test.project}`)
+                .text(`Duration: ${test.duration} ms`);
+
+            if (test.tags.length > 0) {
+
+                doc.text(
+                    `Tags: ${test.tags.join(', ')}`
+                );
+
+            }
+
+            if (test.error) {
+
+                doc.moveDown(0.5);
+
+                doc
+                    .font('Helvetica-Bold')
+                    .text('Error:');
+
+                doc
+                    .font('Helvetica')
+                    .fontSize(9)
+                    .text(test.error);
+            }
+
+            doc.moveDown(1.5);
+        });
+
+        // ==========================================
+        // Final Summary
+        // ==========================================
+
+        doc.addPage();
+
+        doc
+            .fontSize(18)
+            .font('Helvetica-Bold')
+            .text('Final Summary');
+
+        doc.moveDown();
+
+        doc
+            .fontSize(12)
+            .font('Helvetica')
+            .text(`Total Tests : ${total}`)
+            .text(`Passed      : ${passed}`)
+            .text(`Failed      : ${failed}`)
+            .text(`Skipped     : ${skipped}`)
+            .text(`Pass Rate   : ${passRate}%`);
+
+        doc.moveDown(2);
+
+        doc
+            .fontSize(10)
+            .text(
+                'Report generated by Ndosi Automation Playwright Framework.'
+            );
+
+        // ==========================================
+        // Finish PDF
+        // ==========================================
+
+        doc.end();
+
+        stream.on('finish', () => {
+
+            console.log(
+                `PDF report generated: ${pdfPath}`
+            );
+
+        });
+    }
+}
