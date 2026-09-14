@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Ndosi Automation - Extent Report</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f6f8;
+
+            margin: 0;
+
+            padding: 0;
+
+        }
+
+        .header {
+
+            background: #1f2937;
+
+            color: white;
+
+            padding: 30px;
+
+        }
+
+        .header h1 {
+
+            margin: 0;
+
+        }
+
+        .container {
+
+            padding: 30px;
+
+        }
+
+        .summary {
+
+            display: flex;
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+
+        }
+
+        .card {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+            min-width: 130px;
+
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+        }
+
+        .card h2 {
+
+            margin: 0 0 10px 0;
+
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            background: white;
+
+        }
+
+        th {
+
+            background: #374151;
+
+            color: white;
+
+            padding: 12px;
+
+            text-align: left;
+
+        }
+
+        td {
+
+            padding: 12px;
+
+            border-bottom: 1px solid #ddd;
+
+            vertical-align: top;
+
+        }
+
+        .status {
+
+            padding: 5px 10px;
+
+            border-radius: 5px;
+
+            font-weight: bold;
+
+        }
+
+        .pass {
+
+            background: #d1fae5;
+
+            color: #065f46;
+
+        }
+
+        .fail {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+        }
+
+        .skip {
+
+            background: #fef3c7;
+
+            color: #92400e;
+
+        }
+
+        pre {
+
+            white-space: pre-wrap;
+
+            max-width: 400px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>Ndosi Automation</h1>
+
+        <p>Playwright Test Execution Report</p>
+
+    </div>
+
+    <div class="container">
+
+        <div class="summary">
+
+            <div class="card">
+
+                <h2>6</h2>
+
+                <p>Total Tests</p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>5</h2>
+
+                <p>Passed</p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>1</h2>
+
+                <p>Failed</p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>0</h2>
+
+                <p>Skipped</p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>12358 ms</h2>
+
+                <p>Execution Time</p>
+
+            </div>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Test</th>
+
+                    <th>Status</th>
+
+                    <th>Browser</th>
+
+                    <th>Tags</th>
+
+                    <th>Duration</th>
+
+                    <th>Screenshot</th>
+
+                    <th>Error</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                
+                <tr>
+
+                    <td>Verify page title</td>
+
+                    <td>
+                        <span class="status pass">
+                            PASS
+                        </span>
+                    </td>
+
+                    <td>chromium</td>
+
+                    <td>-</td>
+
+                    <td>2469 ms</td>
+
+                    <td>-</td>
+
+                    <td>-</td>
+
+                </tr>
+            
+                <tr>
+
+                    <td>Verify page Url</td>
+
+                    <td>
+                        <span class="status pass">
+                            PASS
+                        </span>
+                    </td>
+
+                    <td>chromium</td>
+
+                    <td>-</td>
+
+                    <td>2707 ms</td>
+
+                    <td>-</td>
+
+                    <td>-</td>
+
+                </tr>
+            
+                <tr>
+
+                    <td>Login test invaliduser</td>
+
+                    <td>
+                        <span class="status pass">
+                            PASS
+                        </span>
+                    </td>
+
+                    <td>chromium</td>
+
+                    <td>-</td>
+
+                    <td>3516 ms</td>
+
+                    <td>-</td>
+
+                    <td>-</td>
+
+                </tr>
+            
+                <tr>
+
+                    <td>SignUp test validuser</td>
+
+                    <td>
+                        <span class="status fail">
+                            FAIL
+                        </span>
+                    </td>
+
+                    <td>chromium</td>
+
+                    <td>-</td>
+
+                    <td>3727 ms</td>
+
+                    <td>-</td>
+
+                    <td><pre>Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+Expected: [32m&quot;Registration submitted successfully. Your account is pending admin approval.&quot;[39m
+Received: [31m&quot;User with this email already exists&quot;[39m</pre></td>
+
+                </tr>
+            
+                <tr>
+
+                    <td>Successful login</td>
+
+                    <td>
+                        <span class="status pass">
+                            PASS
+                        </span>
+                    </td>
+
+                    <td>chromium</td>
+
+                    <td>-</td>
+
+                    <td>3891 ms</td>
+
+                    <td>-</td>
+
+                    <td>-</td>
+
+                </tr>
+            
+                <tr>
+
+                    <td>Login test validuser</td>
+
+                    <td>
+                        <span class="status pass">
+                            PASS
+                        </span>
+                    </td>
+
+                    <td>chromium</td>
+
+                    <td>-</td>
+
+                    <td>4331 ms</td>
+
+                    <td>-</td>
+
+                    <td>-</td>
+
+                </tr>
+            
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>
+        
