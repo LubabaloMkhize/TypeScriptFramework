@@ -9,7 +9,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.65.1",
     "@types/node": "^25.5.0",
     "@types/pdfkit": "^0.17.6",
     "allure-commandline": "^2.38.1",
